@@ -1,27 +1,33 @@
-KpPhageClassifier 0.1.2
-=======================
+# KpPhageClassifier usage guide
+
+[Back to overview](../README.md)
+
 KpPhageClassifier compares a new phage genome with a fixed Klebsiella pneumoniae
 phage reference library. It reports candidate whole-proteome wGRR groups (W),
 existing similarity subgroups (S), and agreement with reference gene order.
 
 This research tool projects queries onto existing groups; it does not recluster
 the reference collection or automatically create new subgroups. Group labels are
-local research labels, not taxonomic or host predictions. See METHODS.txt
+local research labels, not taxonomic or host predictions. See the [methods and interpretation guide](METHODS.md)
 for thresholds, confidence rules and the limits of gene-order comparisons.
 
-INSTALL
--------
+## Installation
+
 Download or clone this repository, then enter its top-level directory.
 The recommended Linux environment includes the tested MMseqs2 version:
 
-  conda env create -f environment.yml
-  conda activate kpphageclassifier
+```bash
+conda env create -f environment.yml
+conda activate kpphageclassifier
+```
 
 Alternatively, with Python >=3.10 and MMseqs2 already installed on PATH:
 
-  python3 -m venv .venv
-  source .venv/bin/activate
-  python -m pip install '.[dna]'
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install '.[dna]'
+```
 
 The dna extra installs Pyrodigal-gv 0.3.2 and Pyrodigal 3.7.1, matching the tested
 reference gene-calling versions. The remaining Python dependencies are NumPy,
@@ -30,29 +36,37 @@ for the reference and validation. The conda environment file pins that version.
 Linux is the validated platform; macOS and Windows/WSL have not been tested.
 
 For users supplying existing proteins and gene coordinates, install with
-  python -m pip install .
+
+```bash
+python -m pip install .
+```
+
 Pyrodigal-gv is then optional. Full Pharokka and its annotation databases are not
 required. Functional annotations in results are derived from reference families;
 this tool does not provide comprehensive de novo functional annotation.
 
-The source-checkout launcher ./kp-phage is also available. It uses .venv/bin/python
-when present, otherwise python3; KP_PHAGE_PYTHON can override this interpreter.
+The source-checkout launcher `./kp-phage` is also available. It uses `.venv/bin/python`
+when present, otherwise python3; `KP_PHAGE_PYTHON` can override this interpreter.
 The installed kp-phage command uses the environment into which pip installed it.
 
-INSTALL THE REFERENCE LIBRARY
-----------------------------
-  kp-phage install-db
-  kp-phage doctor --require-gene-calling
+## Install the reference library
 
-The default database directory is ~/.cache/kpphageclassifier/reference_db, or
-$XDG_CACHE_HOME/kpphageclassifier/reference_db if XDG_CACHE_HOME is set.
-Use KP_PHAGE_DB or --db to select a different directory:
+```bash
+kp-phage install-db
+kp-phage doctor --require-gene-calling
+```
 
-  kp-phage install-db --db references/kp_phage_v1.0.0
-  kp-phage doctor --db references/kp_phage_v1.0.0 --require-gene-calling
+The default database directory is `~/.cache/kpphageclassifier/reference_db`, or
+`$XDG_CACHE_HOME/kpphageclassifier/reference_db` if `XDG_CACHE_HOME` is set.
+Use `KP_PHAGE_DB` or `--db` to select a different directory:
 
-The reference library is released separately on Figshare:
-https://doi.org/10.6084/m9.figshare.35048395.v2
+```bash
+kp-phage install-db --db references/kp_phage_v1.0.0
+kp-phage doctor --db references/kp_phage_v1.0.0 --require-gene-calling
+```
+
+The [reference library](https://doi.org/10.6084/m9.figshare.35048395.v2) is released
+separately on Figshare.
 
 Library version 1.0.0 contains 1,687 unique reference genomes represented by
 173,570 proteins, genome/family metadata, 30 W groups and 125 existing wGRR
@@ -69,45 +83,61 @@ command ultimately fails, temporary files are removed; rerun the command to retr
 No Figshare account or token is required.
 
 To install an archive downloaded separately:
-  kp-phage install-db --archive /path/to/kp_phage_reference_v1.0.0.tar.gz
 
-Other supported source options are --figshare (public item ID, article link or
-DOI) and --url (direct HTTPS URL). They must provide the exact registered archive.
-Installed libraries contain installation.json, release_documentation/ and
-INSTALLED_SHA256SUMS.txt. From inside the database directory, verify with:
-  sha256sum -c INSTALLED_SHA256SUMS.txt
+```bash
+kp-phage install-db --archive /path/to/kp_phage_reference_v1.0.0.tar.gz
+```
 
-CLASSIFY A GENOME
-----------------
-  kp-phage classify --genomes new_phage.fasta --out new_results --threads 8
+Other supported source options are `--figshare` (public item ID, article link or
+DOI) and `--url` (direct HTTPS URL). They must provide the exact registered archive.
+Installed libraries contain `installation.json`, `release_documentation/` and
+`INSTALLED_SHA256SUMS.txt`. From inside the database directory, verify with:
 
-Add --db references/kp_phage_v1.0.0 if you chose a custom database directory.
+```bash
+sha256sum -c INSTALLED_SHA256SUMS.txt
+```
+
+## Classify a genome
+
+```bash
+kp-phage classify --genomes new_phage.fasta --out new_results --threads 8
+```
+
+Add `--db references/kp_phage_v1.0.0` if you chose a custom database directory.
 A classification run does not need network access. Use a NEW output directory;
 existing outputs are never overwritten. MMseqs2 may require several GB of RAM
-and temporary disk space; --memory-limit defaults to 8G for its split-memory
+and temporary disk space; `--memory-limit` defaults to 8G for its split-memory
 setting and is not a hard limit on total process memory.
 
 Each DNA FASTA record is treated as a separate query genome. Aggregation of
-multiple contigs into one genome is not implemented. Use --genome-status complete
+multiple contigs into one genome is not implemented. Use `--genome-status complete`
 only when completeness is independently supported; the default is unknown.
 partial is also supported. These are user-supplied flags, not completeness tests.
 
 For an external MMseqs2 or gene-calling interpreter:
-  kp-phage classify --genomes new_phage.fasta --out new_results \
-    --mmseqs /path/to/mmseqs --caller-python /path/to/python
 
-Equivalent defaults can be set with KP_PHAGE_MMSEQS and KP_PHAGE_CALLER_PYTHON.
+```bash
+kp-phage classify --genomes new_phage.fasta --out new_results \
+  --mmseqs /path/to/mmseqs --caller-python /path/to/python
+```
+
+Equivalent defaults can be set with `KP_PHAGE_MMSEQS` and `KP_PHAGE_CALLER_PYTHON`.
 The selected caller interpreter must have Biopython, Pyrodigal-gv and Pyrodigal.
-In a source checkout only, an ignored .kp-phage.local.json can provide db, mmseqs
-and caller_python defaults. Environment variables override that file; command
+In a source checkout only, an ignored `.kp-phage.local.json` can provide db, mmseqs
+and `caller_python` defaults. Environment variables override that file; command
 options override both. Local settings are not part of the distributed package.
 
-USE EXISTING PROTEINS
---------------------
-  kp-phage classify --proteins phage.faa --genes genes.tsv --out protein_results
+## Use existing proteins
+
+```bash
+kp-phage classify --proteins phage.faa --genes genes.tsv --out protein_results
+```
 
 The tab-delimited gene table requires these columns:
-  genome_id  gene_id  start  end  strand
+
+```text
+genome_id	gene_id	start	end	strand
+```
 
 Coordinates are 1-based and inclusive; strand is + or -. Gene IDs must be unique
 across genomes and match the FASTA protein IDs exactly. A terminal stop symbol is
@@ -115,61 +145,65 @@ removed; internal stop symbols are rejected. Use a consistent prediction method
 for comparability with the references. Order differences from precalled proteins
 remain subject to quality review because no query DNA is available.
 
-OUTPUTS
--------
-REPORT.txt: readable query summaries.
-assignments.tsv / assignments.json: candidate W/S labels, evidence, closest
-  reference, wGRR, matched fractions and gene-order status.
-reference_similarity.tsv: scores against every eligible reference.
-group_and_subgroup_rankings.tsv: W rankings and subgroup ranks within the best W.
-query_family_assignments.tsv: family matches, ambiguity and coordinates.
-gene_order_comparisons.tsv: signed shared-family order and anchor coverage.
-reciprocal_best_matches.tsv: protein pairs contributing to wGRR.
-query_genomes.tsv / query_genes.tsv / query_proteins.faa: normalized inputs.
-run_manifest.json: library/input hashes, parameters, versions and exclusions.
-run_status.json: running, complete or failed; detailed errors are logged.
+## Outputs
+
+| File | Contents |
+| --- | --- |
+| `REPORT.txt` | Readable query summaries |
+| `assignments.tsv` / `assignments.json` | Candidate W/S labels, evidence, closest reference, wGRR, matched fractions and gene-order status |
+| `reference_similarity.tsv` | Scores against every eligible reference |
+| `group_and_subgroup_rankings.tsv` | W rankings and subgroup ranks within the best W group |
+| `query_family_assignments.tsv` | Family matches, ambiguity and coordinates |
+| `gene_order_comparisons.tsv` | Signed shared-family order and anchor coverage |
+| `reciprocal_best_matches.tsv` | Protein pairs contributing to wGRR |
+| `query_genomes.tsv` / `query_genes.tsv` / `query_proteins.faa` | Normalized inputs |
+| `run_manifest.json` | Library/input hashes, parameters, versions and exclusions |
+| `run_status.json` | Running, complete or failed; detailed errors are logged |
 
 Interpret group confidence as heuristic evidence, not a calibrated probability.
 An exact shared-family gene-order match does not imply identical genomes. Known
 MTase families are excluded from order comparison; whole-proteome wGRR includes
 MTases. Low-support or ambiguous queries can remain unassigned.
 
-REFERENCE MAINTENANCE
---------------------
-Normal users should use install-db. The developer-only build-reference command
+## Reference maintenance
+
+Normal users should use `install-db`. The developer-only `build-reference` command
 requires the original analysis project's tables, proteins and genome FASTA,
 which are not distributed with this software repository:
 
-  kp-phage build-reference --project-root /path/to/original_analysis \
-    --db /path/to/new_reference_db
+```bash
+kp-phage build-reference --project-root /path/to/original_analysis \
+  --db /path/to/new_reference_db
+```
 
-Build into a new directory and select it explicitly with --db. To hold references
-out of a query comparison, repeat --exclude-reference with a genome ID or exact
+Build into a new directory and select it explicitly with `--db`. To hold references
+out of a query comparison, repeat `--exclude-reference` with a genome ID or exact
 accession. Exclusions apply to scoring, family assignment and order comparisons;
 family definitions remain those of the original reference construction.
 
-TESTS AND VALIDATION
---------------------
-  python -m pip install '.[dna,dev]'
-  python -m unittest discover -s tests -v
-  ruff check src tests
-  python -m build
-  python -m twine check dist/*
+## Tests and validation
+
+```bash
+python -m pip install '.[dna,dev]'
+python -m unittest discover -s tests -v
+ruff check src tests
+python -m build
+python -m twine check dist/*
+```
 
 Unit tests use synthetic fixtures without downloading the reference library.
-See VALIDATION.txt for local release checks and their scope. The GitHub
+See the [validation summary](VALIDATION.md) for local release checks and their scope. The GitHub
 workflow runs unit tests and packaging checks; it does not download the full
 library or run whole-reference MMseqs searches. Existing held-out tests are
 engineering checks, not independent biological validation of all thresholds.
 
-LICENSE AND CITATION
---------------------
-The software is released under the MIT License; see LICENSE. Dependencies retain
-their own licenses. The reference library on Figshare is labelled CC BY 4.0:
-https://doi.org/10.6084/m9.figshare.35048395.v2
-The software license does not relicense reference data.
+## License and citation
+
+The software is released under the [MIT License](../LICENSE). Dependencies retain
+their own licenses. The [reference library on Figshare](https://doi.org/10.6084/m9.figshare.35048395.v2)
+is labelled **CC BY 4.0**. The software license does not relicense reference data.
 
 When reporting results, record the software version, reference DOI/version,
 MMseqs2 and gene-caller versions and any changed parameters. Cite the reference
-library using its Figshare citation. See METHODS.txt for methodological
+library using its Figshare citation. See the [methods and interpretation guide](METHODS.md) for methodological
 resources. No software paper or separate software DOI is claimed for this release.

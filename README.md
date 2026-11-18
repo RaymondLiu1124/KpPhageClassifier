@@ -5,7 +5,7 @@ by comparing their proteins with a *Klebsiella pneumoniae* phage reference libra
 It uses whole-proteome weighted gene repertoire relatedness (**wGRR**) for group
 assignment, then compares the order of shared protein families.
 
-**Version 0.1.2** · **Python 3.10+** · [Documentation](docs/USAGE.txt) · [Release notes](docs/CHANGELOG.txt)
+**Version 0.1.2** · **Python 3.10+** · [Documentation](docs/USAGE.md) · [Release notes](docs/CHANGELOG.md)
 
 | Command | Function |
 | --- | --- |
@@ -41,7 +41,7 @@ python -m pip install '.[dna]'
 
 For existing proteins and coordinates, `python -m pip install .` is sufficient;
 MMseqs2 is still required, while the gene caller is optional. See the
-[usage guide](docs/USAGE.txt) for executable paths and environment overrides.
+[usage guide](docs/USAGE.md) for executable paths and environment overrides.
 
 ## Reference library
 
@@ -66,7 +66,7 @@ The default location is `~/.cache/kpphageclassifier/reference_db`, or under
 `$XDG_CACHE_HOME` when set. To choose another location, use
 `kp-phage install-db --db /path/to/reference_db`, then pass the same `--db` to
 `classify` and `doctor`. Offline archive installation is also supported; see the
-[usage guide](docs/USAGE.txt).
+[usage guide](docs/USAGE.md).
 
 ## Quick usage
 
@@ -127,16 +127,16 @@ Gene order is checked using shared, single-copy protein families. An exact order
 match describes those shared families, not identical genomes or gene content.
 Known methyltransferase families are excluded from the order comparison;
 whole-proteome wGRR still includes methyltransferases. See the
-[methods and interpretation guide](docs/METHODS.txt) for thresholds and order statuses.
+[methods and interpretation guide](docs/METHODS.md) for thresholds and order statuses.
 
 ## Documentation
 
-The [usage guide](docs/USAGE.txt) covers installation alternatives, input
+The [usage guide](docs/USAGE.md) covers installation alternatives, input
 requirements, database management, outputs, configuration and reference maintenance.
 
-- [Similarity thresholds and gene-order interpretation](docs/METHODS.txt)
-- [Validation and its scope](docs/VALIDATION.txt)
-- [Release notes](docs/CHANGELOG.txt)
+- [Similarity thresholds and gene-order interpretation](docs/METHODS.md)
+- [Validation and its scope](docs/VALIDATION.md)
+- [Release notes](docs/CHANGELOG.md)
 - [Report an issue](https://github.com/lxd98/KpPhageClassifier/issues)
 
 Use `kp-phage classify --help`, `kp-phage install-db --help`, or
