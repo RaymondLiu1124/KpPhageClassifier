@@ -6,7 +6,7 @@ existing similarity subgroups (S), and agreement with reference gene order.
 
 This research tool projects queries onto existing groups; it does not recluster
 the reference collection or automatically create new subgroups. Group labels are
-local research labels, not taxonomic or host predictions. See docs/METHODS.txt
+local research labels, not taxonomic or host predictions. See METHODS.txt
 for thresholds, confidence rules and the limits of gene-order comparisons.
 
 INSTALL
@@ -157,7 +157,7 @@ TESTS AND VALIDATION
   python -m twine check dist/*
 
 Unit tests use synthetic fixtures without downloading the reference library.
-See docs/VALIDATION.txt for local release checks and their scope. The GitHub
+See VALIDATION.txt for local release checks and their scope. The GitHub
 workflow runs unit tests and packaging checks; it does not download the full
 library or run whole-reference MMseqs searches. Existing held-out tests are
 engineering checks, not independent biological validation of all thresholds.
@@ -171,5 +171,5 @@ The software license does not relicense reference data.
 
 When reporting results, record the software version, reference DOI/version,
 MMseqs2 and gene-caller versions and any changed parameters. Cite the reference
-library using its Figshare citation. See docs/METHODS.txt for methodological
+library using its Figshare citation. See METHODS.txt for methodological
 resources. No software paper or separate software DOI is claimed for this release.

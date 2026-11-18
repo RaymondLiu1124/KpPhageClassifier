@@ -46,5 +46,7 @@ SCOPE
 These are engineering checks with known reference genomes. Original family
 construction retained the held-out sequences; these checks are not independent
 biological validation or calibrated accuracy estimates. Linux/Python 3.13 was
-tested locally. The configured GitHub matrix (Python 3.10–3.13) has not yet run
-on GitHub. A new conda solve, macOS and Windows/WSL were not tested locally.
+tested locally. After upload, the GitHub test and packaging matrix passed on
+Python 3.10, 3.11, 3.12 and 3.13:
+https://github.com/lxd98/KpPhageClassifier/actions/runs/44263954708
+A new conda solve, macOS and Windows/WSL were not tested locally.

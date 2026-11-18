@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "KpPhageClassifier"
 dynamic = ["version"]
 description = "Reference-relative Klebsiella phage classification using whole-proteome wGRR and gene-order comparison"
-readme = {file = "README.txt", content-type = "text/plain"}
+readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -26,6 +26,8 @@ dev = ["build>=1.2", "twine>=6", "ruff>=0.8"]
 kp-phage = "kp_phage_classifier.cli:main"
 
 [project.urls]
+"Repository" = "https://github.com/lxd98/KpPhageClassifier"
+"Issues" = "https://github.com/lxd98/KpPhageClassifier/issues"
 "Reference library" = "https://doi.org/10.6084/m9.figshare.35048395.v2"
 
 [tool.setuptools.dynamic]
