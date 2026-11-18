@@ -1,0 +1,22 @@
+0.1.2 — GitHub release preparation
+---------------------------------
+Added installable Python packaging, the kp-phage console command, optional DNA
+prediction dependencies, a conda environment and GitHub test workflow.
+Removed machine-specific defaults from distributed code. Database defaults now
+use a user cache and can be overridden by environment variables or CLI options.
+Preserved development-only settings in an ignored local configuration file.
+Moved gene calling into the package and use Pyrodigal-gv directly, retaining the
+same calling settings without requiring full Pharokka.
+Improved doctor to check reference availability and optional gene-calling modules.
+Preserved numeric protein/genome IDs, including leading zeros, in input tables.
+Added the MIT software license, release documentation and repository exclusions.
+No changes to the reference library, protein similarity thresholds or group labels.
+
+0.1.1 — Reference installer
+--------------------------
+Added pinned Figshare/offline archive installation, archive/file checksums,
+restricted extraction, interrupted-transfer retry/resume and installer tests.
+
+0.1.0 — Initial local classifier
+--------------------------------
+Reference-relative W/S assignment, family mapping and signed gene-order checks.

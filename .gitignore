@@ -1,0 +1,21 @@
+# Downloaded reference data and analysis outputs are released separately.
+reference_db/
+references/
+validation/
+results/
+*_results/
+.kp-phage.local.json
+.venv
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.DS_Store

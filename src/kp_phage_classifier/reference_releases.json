@@ -1,0 +1,14 @@
+{
+  "1.0.0": {
+    "filename": "kp_phage_reference_v1.0.0.tar.gz",
+    "package_root": "kp_phage_reference_v1.0.0",
+    "sha256": "e926539849ab76a2b494ab33a8b31ae0d229726792ea5b1d466ca8bb5d0e7044",
+    "archive_bytes": 47964615,
+    "expanded_bytes": 105915871,
+    "reference_genomes": 1687,
+    "reference_proteins": 173570,
+    "download_url": "https://ndownloader.figshare.com/files/71592775",
+    "figshare_item": "10.6084/m9.figshare.35048395.v2",
+    "figshare_file_id": 71592775
+  }
+}

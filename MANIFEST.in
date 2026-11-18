@@ -1,0 +1,7 @@
+include README.txt LICENSE requirements.txt environment.yml kp-phage
+recursive-include docs *.txt
+recursive-include tests *.py
+prune reference_db
+prune references
+prune validation
+global-exclude __pycache__ *.py[cod]

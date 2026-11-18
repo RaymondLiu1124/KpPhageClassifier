@@ -1,0 +1,5 @@
+numpy>=1.23
+pandas>=1.5
+biopython>=1.81
+# Prefer: python -m pip install ".[dna]"
+# MMseqs2 is installed separately; see environment.yml.

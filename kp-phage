@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+classifier_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+classifier_python="${KP_PHAGE_PYTHON:-python3}"
+if [[ -z "${KP_PHAGE_PYTHON:-}" && -x "$classifier_dir/.venv/bin/python" ]]; then
+    classifier_python="$classifier_dir/.venv/bin/python"
+fi
+export PYTHONPATH="$classifier_dir/src${PYTHONPATH:+:$PYTHONPATH}"
+exec "$classifier_python" -m kp_phage_classifier.cli "$@"

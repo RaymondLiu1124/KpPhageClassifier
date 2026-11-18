@@ -1,0 +1,10 @@
+name: kpphageclassifier
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - pip
+  - mmseqs2=18.8cc5c
+  - pip:
+      - ".[dna]"
