@@ -86,10 +86,10 @@ python examples/phage_plasmids/check_results.py example_results/assignments.tsv
 The FASTA contains one record for each phage–plasmid. With classifier 0.1.2,
 reference library 1.0.0 and default thresholds, the expected results are:
 
-| Query | Accession | W group | Candidate subgroup |
-| --- | --- | --- | --- |
-| phiKO2 | NC_005857.1 | W005 | W005-S02 |
-| pKPHS1 | NC_016838.1 | W020 | W020-S01 |
+| Query | Accession | W group | Candidate subgroup | Best reference | wGRR |
+| --- | --- | --- | --- | --- | ---: |
+| phiKO2 | NC_005857.1 | W005 | W005-S02 | OQ830459.1 | 0.732 |
+| pKPHS1 | NC_016838.1 | W020 | W020-S01 | MK422451.1 | 0.852 |
 
 The checker prints the observed assignments and `PASS` when both rows match the
 [expected results](examples/phage_plasmids/expected.tsv). It exits with an error
