@@ -9,7 +9,7 @@ and reports a candidate assignment when the protein matches support it.
 
 **Version 0.1.2** · **Python 3.10+** · [Documentation](docs/USAGE.md) · [Release notes](docs/CHANGELOG.md)
 
-[Open the W-group explorer](https://lxd98.github.io/KpPhageClassifier/) to browse
+[Open the W-group explorer](https://raymondliu1124.github.io/KpPhageClassifier/) to browse
 the 1,687 reference genomes. Search by phage name or accession to find its W group,
 view its whole-proteome similarities and inspect the group's representative gene framework.
 
@@ -25,7 +25,7 @@ view its whole-proteome similarities and inspect the group's representative gene
 Clone the repository and create the Linux environment:
 
 ```bash
-git clone https://github.com/lxd98/KpPhageClassifier.git
+git clone https://github.com/RaymondLiu1124/KpPhageClassifier.git
 cd KpPhageClassifier
 conda env create -f environment.yml
 conda activate kpphageclassifier
@@ -141,7 +141,7 @@ requirements, database management, outputs, configuration and reference maintena
 - [W-group assignment thresholds and methods](docs/METHODS.md)
 - [Validation and its scope](docs/VALIDATION.md)
 - [Release notes](docs/CHANGELOG.md)
-- [Report an issue](https://github.com/lxd98/KpPhageClassifier/issues)
+- [Report an issue](https://github.com/RaymondLiu1124/KpPhageClassifier/issues)
 
 Use `kp-phage classify --help`, `kp-phage install-db --help`, or
 `kp-phage doctor --help` for command-specific options.

@@ -56,6 +56,6 @@ construction retained the held-out sequences; these checks are not independent
 biological validation or calibrated accuracy estimates.
 
 Linux and Python 3.13 were tested locally. After upload, the
-[GitHub test and packaging matrix](https://github.com/lxd98/KpPhageClassifier/actions/runs/44263954708)
+[GitHub test and packaging matrix](https://github.com/RaymondLiu1124/KpPhageClassifier/actions/runs/44263954708)
 passed on **Python 3.10, 3.11, 3.12 and 3.13**. A new conda solve, macOS and
 Windows/WSL were not tested locally.

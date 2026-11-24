@@ -26,8 +26,8 @@ dev = ["build>=1.2", "twine>=6", "ruff>=0.8"]
 kp-phage = "kp_phage_classifier.cli:main"
 
 [project.urls]
-"Repository" = "https://github.com/lxd98/KpPhageClassifier"
-"Issues" = "https://github.com/lxd98/KpPhageClassifier/issues"
+"Repository" = "https://github.com/RaymondLiu1124/KpPhageClassifier"
+"Issues" = "https://github.com/RaymondLiu1124/KpPhageClassifier/issues"
 "Reference library" = "https://doi.org/10.6084/m9.figshare.35048395.v2"
 
 [tool.setuptools.dynamic]
