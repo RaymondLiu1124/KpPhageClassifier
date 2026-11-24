@@ -73,6 +73,29 @@ The default location is `~/.cache/kpphageclassifier/reference_db`, or under
 `classify` and `doctor`. Offline archive installation is also supported; see the
 [usage guide](docs/USAGE.md).
 
+## Test your installation with two genomes
+
+From the repository root, after installing the tool and reference library, classify
+the [example FASTA](examples/phage_plasmids/phage_plasmids.fna) and check the output:
+
+```bash
+kp-phage classify --genomes examples/phage_plasmids/phage_plasmids.fna --out example_results --threads 8
+python examples/phage_plasmids/check_results.py example_results/assignments.tsv
+```
+
+The FASTA contains one record for each phage–plasmid. With classifier 0.1.2,
+reference library 1.0.0 and default thresholds, the expected results are:
+
+| Query | Accession | W group | Candidate subgroup |
+| --- | --- | --- | --- |
+| phiKO2 | NC_005857.1 | W005 | W005-S02 |
+| pKPHS1 | NC_016838.1 | W020 | W020-S01 |
+
+The checker prints the observed assignments and `PASS` when both rows match the
+[expected results](examples/phage_plasmids/expected.tsv). It exits with an error
+for a missing query or a different assignment. For a second run, use a fresh
+output directory in both commands.
+
 ## Quick usage
 
 Classify a DNA FASTA:
@@ -113,14 +136,6 @@ Use **`candidate_W_group`** in `assignments.tsv` as the project classification,
 and read **`W_evidence`** alongside it. A blank assignment means the query remains
 unresolved. A query can still have a closest reference in `best_reference` in that
 case. The W labels describe protein-repertoire similarity among the project references.
-
-For example, the project’s phage–plasmid analysis produced the following W-group results.
-The wGRR shown is the query’s score against its best reference.
-
-| Query | Candidate W group | Best reference | wGRR | Evidence |
-| --- | --- | --- | ---: | --- |
-| phiKO2 (`NC_005857.1`) | W005 | `OQ830459.1` | 0.732 | Strong |
-| pKPHS1 (`NC_016838.1`) | W020 | `MK422451.1` | 0.852 | Strong |
 
 | File | What to look for |
 | --- | --- |
