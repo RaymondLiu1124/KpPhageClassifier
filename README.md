@@ -1,22 +1,21 @@
 # KpPhageClassifier
 
-**KpPhageClassifier** assigns candidate groups and subgroups to new phage genomes
-by comparing their proteins with a *Klebsiella pneumoniae* phage reference library.
-It uses whole-proteome weighted gene repertoire relatedness (**wGRR**) for group
-assignment, then compares the order of shared protein families.
+**KpPhageClassifier** assigns a query phage genome to one of 30 reference **W groups**
+defined for *Klebsiella pneumoniae*-associated phages. The W groups were identified
+by Louvain clustering of a whole-proteome similarity network. To place a new genome,
+the classifier compares its proteins with the reference proteins using weighted gene
+repertoire relatedness (**wGRR**). It ranks each W group by its best-scoring reference
+and reports a candidate assignment when the protein matches support it.
 
 **Version 0.1.2** · **Python 3.10+** · [Documentation](docs/USAGE.md) · [Release notes](docs/CHANGELOG.md)
 
 [Open the W-group explorer](https://lxd98.github.io/KpPhageClassifier/) to browse
-1,687 reference genomes in 30 W groups and 125 subgroups. Search by phage name or
-accession to see a genome's subgroup, whole-proteome similarities, and representative
-gene framework. The explorer numbers W001 subgroups from left to right on the heatmap.
-For comparison with classifier 0.1.2, explorer S01, S02, S03, S04, and S05 correspond
-to classifier S05, S04, S02, S03, and S01, respectively.
+the 1,687 reference genomes. Search by phage name or accession to find its W group,
+view its whole-proteome similarities and inspect the group's representative gene framework.
 
 | Command | Function |
 | --- | --- |
-| `classify` | Assign candidate W groups and S subgroups, and compare reference gene order |
+| `classify` | Report a candidate W group, best reference, wGRR and assignment evidence |
 | `install-db` | Download and verify the versioned reference library from Figshare |
 | `doctor` | Check the reference library, MMseqs2 and optional gene-calling dependencies |
 | `build-reference` | Build a new library from the original analysis project; for reference maintainers |
@@ -60,10 +59,9 @@ kp-phage doctor --require-gene-calling
 ```
 
 The [reference library v1.0.0](https://doi.org/10.6084/m9.figshare.35048395.v2)
-contains **1,687 reference genomes represented by 173,570 proteins**, with
-**30 W groups** and **125 existing wGRR subgroup labels**. It includes protein
-sequences, family membership, gene coordinates and group assignments; genome DNA
-is not bundled. The library is hosted separately from the software on Figshare.
+contains **173,570 predicted proteins from 1,687 reference genomes across 30 W groups**.
+It provides reference protein sequences, family memberships, gene coordinates and
+W-group assignments. The reference library is distributed through Figshare.
 
 The download is approximately **48 MB** and expands to approximately **106 MB**.
 The installer checks the archive and file checksums and preserves existing
@@ -111,37 +109,36 @@ Use consistent gene predictions for comparability with the reference library.
 
 ## Output
 
-Start with `REPORT.txt` for a readable summary or `assignments.tsv` for one row
-per query. The latter reports candidate groups, the closest reference, wGRR,
-matched-protein fractions and gene-order status.
+Use **`candidate_W_group`** in `assignments.tsv` as the project classification,
+and read **`W_evidence`** alongside it. A blank assignment means the query remains
+unresolved. A query can still have a closest reference in `best_reference` in that
+case. The W labels describe protein-repertoire similarity among the project references.
 
-| File | Contents |
+For example, the project’s phage–plasmid analysis produced the following W-group results.
+The wGRR shown is the query’s score against its best reference.
+
+| Query | Candidate W group | Best reference | wGRR | Evidence |
+| --- | --- | --- | ---: | --- |
+| phiKO2 (`NC_005857.1`) | W005 | `OQ830459.1` | 0.732 | Strong |
+| pKPHS1 (`NC_016838.1`) | W020 | `MK422451.1` | 0.852 | Strong |
+
+| File | What to look for |
 | --- | --- |
-| `assignments.tsv` / `assignments.json` | Candidate W/S labels and supporting evidence |
-| `reference_similarity.tsv` | Similarity scores against each eligible reference |
-| `group_and_subgroup_rankings.tsv` | W-group ranks and subgroup ranks within the best W group |
-| `query_family_assignments.tsv` | Protein-family matches, ambiguity and gene coordinates |
-| `gene_order_comparisons.tsv` | Shared-family order similarity and anchor coverage |
-| `reciprocal_best_matches.tsv` | Protein pairs contributing to wGRR |
-| `run_manifest.json` / `run_status.json` | Input/library provenance, parameters and run status |
+| `REPORT.txt` | Readable summary for each query |
+| `assignments.tsv` / `assignments.json` | Candidate W group, evidence, best reference, wGRR and matched-protein fractions |
+| `reference_similarity.tsv` | Pairwise scores for checking how well other references match the query |
+| `reciprocal_best_matches.tsv` | Protein pairs contributing to each wGRR score |
+| `run_manifest.json` / `run_status.json` | Inputs, library version, run parameters and status |
 
-**W and S labels are research groups, not formal taxonomy or host predictions.**
-The tool projects a query onto existing groups; low-support or ambiguous queries
-can remain unassigned. It does not recluster the references or automatically
-create a new subgroup.
-
-Gene order is checked using shared, single-copy protein families. An exact order
-match describes those shared families, not identical genomes or gene content.
-Known methyltransferase families are excluded from the order comparison;
-whole-proteome wGRR still includes methyltransferases. See the
-[methods and interpretation guide](docs/METHODS.md) for thresholds and order statuses.
+The [methods guide](docs/METHODS.md) documents the W-group support thresholds and
+the additional comparisons produced by the software.
 
 ## Documentation
 
 The [usage guide](docs/USAGE.md) covers installation alternatives, input
 requirements, database management, outputs, configuration and reference maintenance.
 
-- [Similarity thresholds and gene-order interpretation](docs/METHODS.md)
+- [W-group assignment thresholds and methods](docs/METHODS.md)
 - [Validation and its scope](docs/VALIDATION.md)
 - [Release notes](docs/CHANGELOG.md)
 - [Report an issue](https://github.com/lxd98/KpPhageClassifier/issues)
