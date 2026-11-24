@@ -7,6 +7,13 @@ assignment, then compares the order of shared protein families.
 
 **Version 0.1.2** · **Python 3.10+** · [Documentation](docs/USAGE.md) · [Release notes](docs/CHANGELOG.md)
 
+[Open the W-group explorer](https://lxd98.github.io/KpPhageClassifier/) to browse
+1,687 reference genomes in 30 W groups and 125 subgroups. Search by phage name or
+accession to see a genome's subgroup, whole-proteome similarities, and representative
+gene framework. The explorer numbers W001 subgroups from left to right on the heatmap.
+For comparison with classifier 0.1.2, explorer S01, S02, S03, S04, and S05 correspond
+to classifier S05, S04, S02, S03, and S01, respectively.
+
 | Command | Function |
 | --- | --- |
 | `classify` | Assign candidate W groups and S subgroups, and compare reference gene order |
